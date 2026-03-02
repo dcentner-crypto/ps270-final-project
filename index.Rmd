@@ -20,14 +20,14 @@ library(readxl)
 I am interested in exploring data related to college graduates and available jobs overtime.
 
 My research question is, how is unemployment rate related to the job availability for recent college graduates?
-My hypothesis is that the unemployment rate for recent college graduates is currently one of the highest among other groups studied, reflecting that job availability is lower for them.
-
-The variables are unemployment rate, recent college graduates, and years. 
-My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed.
-An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate among the other groups studied.
+My hypothesis is that the unemployment rate for recent college graduates is currently one of the highest among other groups studied, reflecting that job availability is lower for them. The variables are unemployment rate, recent college graduates, and years. My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate among the other groups studied.
 
 ```{r}
 college_labor <- read_excel("data/College-labor-data.xlsx", sheet = "unemployed", skip = 9)
 college_labor
+```
+
+```{r}
+glimpse(college_labor)
 ```
 
