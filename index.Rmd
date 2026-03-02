@@ -7,7 +7,12 @@ output:
     self_contained: false
 ---
 ```{r}
-install.packages("distill") 
+getwd()
+list.files()
+```
+
+```{r}
+
 library(tidyverse)
 library(readxl)
 
@@ -29,5 +34,6 @@ college_labor
 
 ```{r}
 glimpse(college_labor)
+getwd()
 ```
 

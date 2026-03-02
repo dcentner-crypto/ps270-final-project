@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/College-labor-data.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1544,9 +1544,67 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;C:/Users/domin/Documents/PS270 RStudio stuff/ps270-final-project&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;data&quot;                      &quot;index.html&quot;               
+[3] &quot;index.Rmd&quot;                 &quot;index_files&quot;              
+[5] &quot;ps270-final-project.Rproj&quot;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
 <h2 id="project-thoughts">Project thoughts</h2>
 <p>I am interested in exploring data related to college graduates and available jobs overtime.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>My research question is, how is unemployment rate related to the job availability for recent college graduates?
+My hypothesis is that the unemployment rate for recent college graduates is currently one of the highest among other groups studied, reflecting that job availability is lower for them. The variables are unemployment rate, recent college graduates, and years. My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate among the other groups studied.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>college_labor</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"data/College-labor-data.xlsx"</span>, sheet <span class='op'>=</span> <span class='st'>"unemployed"</span>, skip <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span></span>
+<span><span class='va'>college_labor</span></span></code></pre>
+</div>
+<pre><code># A tibble: 432 × 5
+   Date                `Young workers` `All workers`
+   &lt;dttm&gt;                        &lt;dbl&gt;         &lt;dbl&gt;
+ 1 1990-01-01 00:00:00            7.60          5.13
+ 2 1990-02-01 00:00:00            7.60          5.07
+ 3 1990-03-01 00:00:00            7.61          5.05
+ 4 1990-04-01 00:00:00            7.74          5.08
+ 5 1990-05-01 00:00:00            7.66          5.12
+ 6 1990-06-01 00:00:00            7.57          5.13
+ 7 1990-07-01 00:00:00            7.60          5.18
+ 8 1990-08-01 00:00:00            7.87          5.29
+ 9 1990-09-01 00:00:00            8.15          5.50
+10 1990-10-01 00:00:00            8.28          5.60
+# ℹ 422 more rows
+# ℹ 2 more variables: `Recent graduates` &lt;dbl&gt;,
+#   `College graduates` &lt;dbl&gt;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>college_labor</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Rows: 432
+Columns: 5
+$ Date                &lt;dttm&gt; 1990-01-01, 1990-02-01, 1990-03-01, 199…
+$ `Young workers`     &lt;dbl&gt; 7.603, 7.598, 7.608, 7.736, 7.661, 7.570…
+$ `All workers`       &lt;dbl&gt; 5.132, 5.071, 5.049, 5.084, 5.121, 5.130…
+$ `Recent graduates`  &lt;dbl&gt; 3.381, 3.039, 3.136, 3.565, 3.861, 3.877…
+$ `College graduates` &lt;dbl&gt; 2.270, 2.206, 2.165, 2.186, 2.198, 2.298…</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;C:/Users/domin/Documents/PS270 RStudio stuff/ps270-final-project&quot;</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
