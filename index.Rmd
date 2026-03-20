@@ -34,20 +34,84 @@ college_labor <- read_excel("data/College-labor-data.xlsx", sheet = "unemployed"
 college_labor
 ```
 
-```{r}
-names(college_labor) <- c("date", "young_workers", "all_workers",
-                          "recent_graduates", "college_graduates")
-```
 
 
-
-Let's visualize the unemployment data using ggplot.
+Let's visualize the unemployment data among recent graduates using ggplot.
 
 
 ```{r}
 ggplot(college_labor,
-       mapping = aes(x = date,
-                     y = recent_graduates)) +
+       mapping = aes(x = `Date`,
+                     y = `Recent graduates`)) +
   geom_line()
 ```
+
+Now, let's visualize the unemployment data among all workers.
+
+```{r}
+ggplot(college_labor, 
+       mapping = aes(x = `Date`,
+                     y = `All workers`)) +
+  geom_line() 
+```
+From both of these graphs we can see the unemployment rate among recent college graduates is higher than the rate for all workers. Let's combine these two variables into one graph:
+
+```{r}
+recentgrads_allworkers <- college_labor |> 
+  pivot_longer(
+    cols = c(`Recent graduates`, `All workers`),
+    names_to = "group",
+    values_to = "unemployment_rate"
+  )
+```
+```{r}
+recentgrads_allworkers |>
+  ggplot(mapping = aes(x = `Date`, y = unemployment_rate, color = group)) +
+  geom_line() +
+  labs( x = "Date",
+        y = "Unemployment Rate",
+        title = "Unemployment Rate Among Recent Graduates and All Workers",
+        color = "Workers")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(FOR MILESTONE 4:)
+
+From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.
+
+```{r}
+college_labor_longer <- college_labor |>
+  pivot_longer(
+    cols = c(`Recent graduates`, `Young workers`, `All workers`, `College graduates`),
+    names_to = "group",
+    values_to = "unemployment_rate"
+  )
+```
+```{r}
+college_labor_longer |>
+  ggplot(mapping = aes(x = `Date`, y = unemployment_rate, color = group)) +
+  geom_line() +
+  labs( x = "Date", 
+        y = "Unemployment Rate", 
+        title = "Unemployment Rate Among Recent College Graduates",
+        color = "Groups")
+```
+
 

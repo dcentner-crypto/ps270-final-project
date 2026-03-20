@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/College-labor-data.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/College-labor-data.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/figure-html5/unnamed-chunk-9-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1588,21 +1588,72 @@ My hypothesis is that the unemployment rate for recent college graduates is curr
 # ℹ 2 more variables: `Recent graduates` &lt;dbl&gt;,
 #   `College graduates` &lt;dbl&gt;</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>college_labor</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>, <span class='st'>"young_workers"</span>, <span class='st'>"all_workers"</span>,</span>
-<span>                          <span class='st'>"recent_graduates"</span>, <span class='st'>"college_graduates"</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<p>Let’s visualize the unemployment data using ggplot.</p>
+<p>Let’s visualize the unemployment data among recent graduates using ggplot.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>,</span>
-<span>       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>date</span>,</span>
-<span>                     y <span class='op'>=</span> <span class='va'>recent_graduates</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>,</span>
+<span>                     y <span class='op'>=</span> <span class='va'>`Recent graduates`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" alt="" width="624" /></p>
+</div>
+<p>Now, let’s visualize the unemployment data among all workers.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>, </span>
+<span>       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>,</span>
+<span>                     y <span class='op'>=</span> <span class='va'>`All workers`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> </span></code></pre>
+</div>
 <p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="624" /></p>
+</div>
+<p>From both of these graphs we can see the unemployment rate among recent college graduates is higher than the rate for all workers. Let’s combine these two variables into one graph:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>recentgrads_allworkers</span> <span class='op'>&lt;-</span> <span class='va'>college_labor</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span></span>
+<span>    cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>`Recent graduates`</span>, <span class='va'>`All workers`</span><span class='op'>)</span>,</span>
+<span>    names_to <span class='op'>=</span> <span class='st'>"group"</span>,</span>
+<span>    values_to <span class='op'>=</span> <span class='st'>"unemployment_rate"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>recentgrads_allworkers</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>, y <span class='op'>=</span> <span class='va'>unemployment_rate</span>, color <span class='op'>=</span> <span class='va'>group</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='st'>"Date"</span>,</span>
+<span>        y <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span>,</span>
+<span>        title <span class='op'>=</span> <span class='st'>"Unemployment Rate Among Recent Graduates and All Workers"</span>,</span>
+<span>        color <span class='op'>=</span> <span class='st'>"Workers"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" alt="" width="624" /></p>
+</div>
+<p>(FOR MILESTONE 4:)</p>
+<p>From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>college_labor_longer</span> <span class='op'>&lt;-</span> <span class='va'>college_labor</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span></span>
+<span>    cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>`Recent graduates`</span>, <span class='va'>`Young workers`</span>, <span class='va'>`All workers`</span>, <span class='va'>`College graduates`</span><span class='op'>)</span>,</span>
+<span>    names_to <span class='op'>=</span> <span class='st'>"group"</span>,</span>
+<span>    values_to <span class='op'>=</span> <span class='st'>"unemployment_rate"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>college_labor_longer</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>, y <span class='op'>=</span> <span class='va'>unemployment_rate</span>, color <span class='op'>=</span> <span class='va'>group</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='st'>"Date"</span>, </span>
+<span>        y <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span>, </span>
+<span>        title <span class='op'>=</span> <span class='st'>"Unemployment Rate Among Recent College Graduates"</span>,</span>
+<span>        color <span class='op'>=</span> <span class='st'>"Groups"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-9-1.png" alt="" width="624" /></p>
 </div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
