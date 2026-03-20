@@ -35,7 +35,19 @@ college_labor
 ```
 
 ```{r}
-glimpse(college_labor)
-getwd()
+names(college_labor) <- c("date", "young_workers", "all_workers",
+                          "recent_graduates", "college_graduates")
+```
+
+
+
+Let's visualize the unemployment data using ggplot.
+
+
+```{r}
+ggplot(college_labor,
+       mapping = aes(x = date,
+                     y = recent_graduates)) +
+  geom_line()
 ```
 
