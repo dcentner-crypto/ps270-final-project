@@ -92,6 +92,24 @@ recentgrads_allworkers |>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (FOR MILESTONE 4:)
 
 From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.
@@ -113,5 +131,3 @@ college_labor_longer |>
         title = "Unemployment Rate Among Recent College Graduates",
         color = "Groups")
 ```
-
-
