@@ -1547,7 +1547,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="project-thoughts">Project thoughts</h2>
 <p>I am interested in exploring data related to college graduates and available jobs overtime.</p>
 <p>My research question is, how is unemployment rate related to the job availability for recent college graduates?
-My hypothesis is that the unemployment rate for recent college graduates is currently one of the highest among other groups studied, reflecting that job availability is lower for them. The variables are unemployment rate, recent college graduates, and years. My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate among the other groups studied.</p>
+My hypothesis is that the unemployment rate for recent college graduates is currently one of the highest among other groups studied, reflecting that job availability is lower for them. The variables are unemployment rate, recent college graduates, and years. My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed. The explanatory variable is time. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate post 2008 among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate post 2008 among the other groups studied.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
@@ -1608,7 +1608,7 @@ My hypothesis is that the unemployment rate for recent college graduates is curr
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="624" /></p>
 </div>
-<p>From both of these graphs we can see the unemployment rate among recent college graduates is higher than the rate for all workers. Let’s combine these two variables into one graph:</p>
+<p>From both of these graphs we can see the unemployment rate, post 2008, among recent college graduates is higher than the rate for all workers. Let’s combine these two variables into one graph:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>recentgrads_allworkers</span> <span class='op'>&lt;-</span> <span class='va'>college_labor</span> <span class='op'>|&gt;</span> </span>
@@ -1632,7 +1632,7 @@ My hypothesis is that the unemployment rate for recent college graduates is curr
 <p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" alt="" width="624" /></p>
 </div>
 <p>(FOR MILESTONE 4:)</p>
-<p>From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.</p>
+<p>From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S., post 2008. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>college_labor_longer</span> <span class='op'>&lt;-</span> <span class='va'>college_labor</span> <span class='op'>|&gt;</span></span>
@@ -1655,6 +1655,7 @@ My hypothesis is that the unemployment rate for recent college graduates is curr
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-9-1.png" alt="" width="624" /></p>
 </div>
+<p>From these graphs and data visualizations, it could be concluded that the unemployment rate is related to the job availability for recent college graduates based on its rate. For example, a high unemployment rate among recent graduates likely correlates with a lower job availability for recent graduates in the labor market. A low unemployment rate among recent graduates could correlate with a higher job availability for them in the labor market. It seems that this graph would answer my research question but disprove my hypothesis. Post-2008, recent college graduates do not have the highest unemployment rate, rather it’s young workers that do, but recent college graduates follow closely behind.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
