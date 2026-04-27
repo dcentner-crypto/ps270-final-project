@@ -25,13 +25,10 @@ library(tidyverse)
 library(readxl)
 
 ```
-
-
-
-
 ```{r}
 college_labor <- read_excel("data/College-labor-data.xlsx", sheet = "unemployed", skip = 9)
-college_labor
+college_labor |>
+  knitr::kable()
 ```
 
 
@@ -74,44 +71,6 @@ recentgrads_allworkers |>
         color = "Workers")
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(FOR MILESTONE 4:)
-
 From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S., post 2008. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.
 
 ```{r}
@@ -132,4 +91,11 @@ college_labor_longer |>
         color = "Groups")
 ```
 From these graphs and data visualizations, it could be concluded that the unemployment rate is related to the job availability for recent college graduates based on its rate. For example, a high unemployment rate among recent graduates likely correlates with a lower job availability for recent graduates in the labor market. A low unemployment rate among recent graduates could correlate with a higher job availability for them in the labor market. It seems that this graph would answer my research question but disprove my hypothesis. Post-2008, recent college graduates do not have the highest unemployment rate, rather it's young workers that do, but recent college graduates follow closely behind.
+ 
+```{r}
+collegelabor.reg <- lm(`unemployment_rate` ~ `Date`, data = college_labor_longer) |>
+  modelsummary::modelsummary()
+collegelabor.reg
+```
+ 
  
