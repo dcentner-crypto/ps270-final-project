@@ -1545,9 +1545,53 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to college graduates and available jobs overtime.</p>
-<p>My research question is, how is unemployment rate related to the job availability for recent college graduates?
-My hypothesis is that the unemployment rate for recent college graduates is currently one of the highest among other groups studied, reflecting that job availability is lower for them. The variables are unemployment rate, recent college graduates, and years. My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed. The explanatory variable is time. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate post 2008 among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate post 2008 among the other groups studied.</p>
+<p>I am interested in exploring data related to recent college graduates and other group types with the type of unemployment rate they have.</p>
+<p>My research question is, how has the passage of time post-2008 affected the recent graduate unemployment rate with other group types? (changed over time)
+My hypothesis is that the unemployment rate for recent college graduates post-2008 is currently one of the highest among other groups studied. The variables are unemployment rate, recent college graduates, college graduates, young workers, all workers, and years. My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed. The explanatory variable is the rate type. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate post 2008 among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate post 2008 among the other groups studied.</p>
+<p>Please note that the date is the control, and is estimated in seconds so the estimate is very small.</p>
+<p>Predicting value of the rate w/ the type of rate</p>
+<p>The data file is “College-labor-data.xlsx”, and contains the following variables:</p>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Date</td>
+<td style="text-align: left;">The date, measured in months, ranging from 1990-01-01 to 2025-12-01.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Unemployment rate</td>
+<td style="text-align: left;">Percentage of people in data that are willing and able to work but are currently without a paid job.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Young workers</td>
+<td style="text-align: left;">Those aged 22 to 27 without a bachelor’s degree.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All workers</td>
+<td style="text-align: left;">Workers aged 16 to 65.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">College graduates</td>
+<td style="text-align: left;">Those aged 22 to 65 with a bachelor’s degree or higher.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Recent college graduates</td>
+<td style="text-align: left;">Those aged 22 to 27 with a bachelor’s degree or higher.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>All figures exclude those currently enrolled in school.</li>
+</ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
@@ -4617,50 +4661,6 @@ My hypothesis is that the unemployment rate for recent college graduates is curr
 </tbody>
 </table>
 </div>
-<p>Let’s visualize the unemployment data among recent graduates using ggplot.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>,</span>
-<span>       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>,</span>
-<span>                     y <span class='op'>=</span> <span class='va'>`Recent graduates`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" alt="" width="624" /></p>
-</div>
-<p>Now, let’s visualize the unemployment data among all workers.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>, </span>
-<span>       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>,</span>
-<span>                     y <span class='op'>=</span> <span class='va'>`All workers`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> </span></code></pre>
-</div>
-<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="624" /></p>
-</div>
-<p>From both of these graphs we can see the unemployment rate, post 2008, among recent college graduates is higher than the rate for all workers. Let’s combine these two variables into one graph:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>recentgrads_allworkers</span> <span class='op'>&lt;-</span> <span class='va'>college_labor</span> <span class='op'>|&gt;</span> </span>
-<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span></span>
-<span>    cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>`Recent graduates`</span>, <span class='va'>`All workers`</span><span class='op'>)</span>,</span>
-<span>    names_to <span class='op'>=</span> <span class='st'>"group"</span>,</span>
-<span>    values_to <span class='op'>=</span> <span class='st'>"unemployment_rate"</span></span>
-<span>  <span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>recentgrads_allworkers</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>, y <span class='op'>=</span> <span class='va'>unemployment_rate</span>, color <span class='op'>=</span> <span class='va'>group</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='st'>"Date"</span>,</span>
-<span>        y <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span>,</span>
-<span>        title <span class='op'>=</span> <span class='st'>"Unemployment Rate Among Recent Graduates and All Workers"</span>,</span>
-<span>        color <span class='op'>=</span> <span class='st'>"Workers"</span><span class='op'>)</span></span></code></pre>
-</div>
-<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" alt="" width="624" /></p>
-</div>
-<p>From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S., post 2008. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>college_labor_longer</span> <span class='op'>&lt;-</span> <span class='va'>college_labor</span> <span class='op'>|&gt;</span></span>
@@ -4671,6 +4671,19 @@ My hypothesis is that the unemployment rate for recent college graduates is curr
 <span>  <span class='op'>)</span></span></code></pre>
 </div>
 </div>
+<p>Let’s visualize the unemployment data among the group types using a histogram for the unemployment rate.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor_longer</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>unemployment_rate</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>group</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="624" /></p>
+</div>
+<p>From this histogram, it can be observed that an unemployment rate below five percent is generally a very common rate for recent graduates, college graduates and all workers. However, an unemployment rate above five percent is a more common rate for young workers.</p>
+<p>graph w/relationship
+boxplot to show the difference between the rate types (control for time)</p>
+<p>From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S., post 2008. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>college_labor_longer</span> <span class='op'>|&gt;</span></span>
@@ -4678,80 +4691,41 @@ My hypothesis is that the unemployment rate for recent college graduates is curr
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='st'>"Date"</span>, </span>
 <span>        y <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span>, </span>
-<span>        title <span class='op'>=</span> <span class='st'>"Unemployment Rate Among Recent College Graduates"</span>,</span>
+<span>        title <span class='op'>=</span> <span class='st'>"Unemployment Rate Among Group Types"</span>,</span>
 <span>        color <span class='op'>=</span> <span class='st'>"Groups"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-9-1.png" alt="" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" alt="" width="624" /></p>
 </div>
 <p>From these graphs and data visualizations, it could be concluded that the unemployment rate is related to the job availability for recent college graduates based on its rate. For example, a high unemployment rate among recent graduates likely correlates with a lower job availability for recent graduates in the labor market. A low unemployment rate among recent graduates could correlate with a higher job availability for them in the labor market. It seems that this graph would answer my research question but disprove my hypothesis. Post-2008, recent college graduates do not have the highest unemployment rate, rather it’s young workers that do, but recent college graduates follow closely behind.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>collegelabor.reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>`unemployment_rate`</span> <span class='op'>~</span> <span class='va'>`Date`</span>, data <span class='op'>=</span> <span class='va'>college_labor_longer</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://modelsummary.com/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>collegelabor.reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>`unemployment_rate`</span> <span class='op'>~</span> <span class='va'>`Date`</span> <span class='op'>+</span> <span class='va'>group</span>, data <span class='op'>=</span> <span class='va'>college_labor_longer</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span><span class='va'>collegelabor.reg</span></span></code></pre>
 </div>
-<table style="width:36%;">
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th><ol type="1">
-<li></li>
-</ol></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td>5.163</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.267)</td>
-</tr>
-<tr class="odd">
-<td>Date</td>
-<td>0.000</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.000)</td>
-</tr>
-<tr class="odd">
-<td>Num.Obs.</td>
-<td>1728</td>
-</tr>
-<tr class="even">
-<td>R2</td>
-<td>0.001</td>
-</tr>
-<tr class="odd">
-<td>R2 Adj.</td>
-<td>0.001</td>
-</tr>
-<tr class="even">
-<td>AIC</td>
-<td>8629.3</td>
-</tr>
-<tr class="odd">
-<td>BIC</td>
-<td>8645.7</td>
-</tr>
-<tr class="even">
-<td>Log.Lik.</td>
-<td>-4311.646</td>
-</tr>
-<tr class="odd">
-<td>RMSE</td>
-<td>2.93</td>
-</tr>
-</tbody>
-</table>
+<pre><code>
+Call:
+lm(formula = unemployment_rate ~ Date + group, data = college_labor_longer)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4483 -0.9774 -0.3229  0.5972 12.5996 
+
+Coefficients:
+                         Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             5.119e+00  1.782e-01  28.730  &lt; 2e-16 ***
+Date                    3.055e-10  1.305e-10   2.342   0.0193 *  
+groupCollege graduates -2.613e+00  1.210e-01 -21.590  &lt; 2e-16 ***
+groupRecent graduates  -9.594e-01  1.210e-01  -7.928 3.97e-15 ***
+groupYoung workers      3.751e+00  1.210e-01  30.993  &lt; 2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 1.779 on 1723 degrees of freedom
+Multiple R-squared:  0.6339,    Adjusted R-squared:  0.6331 
+F-statistic: 745.9 on 4 and 1723 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
