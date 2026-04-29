@@ -9,22 +9,26 @@ output:
 
 ## Project thoughts
 
+Today, anxiety and uncertainty follows recent college graduates as they navigate the college labor market. In a "Current Population Survey" from the U.S. Census Bureau and U.S. Bureau of Labor Statistics, it was interpreted by the Federal Reserve Bank of New York that unemployment rates for recent college graduates climbed to 5 percent in July 2025, and have stayed above it since then. At the end of 2025, the unemployment rate for recent college graduates was 5.6 percent.
+
+(Source here: https://www.newyorkfed.org/research/college-labor-market#--:explore:unemployment)
+
+This raises a point of interest that I am exploring in my project. With this anxiety surrounding recent college graduates and their increasing risk of unemployment, I am interested in exploring data related to recent college graduates and other group types with the type of unemployment rate they have. My research question is, how has the passage of time post-2008 changed the recent graduate unemployment rate with other group types over time? My hypothesis is that the passage of time post-2008 will show a pattern that the recent graduate unemployment rate increased more than other groups over time.
 
 
-I am interested in exploring data related to recent college graduates and other group types with the type of unemployment rate they have.
+Data section: 2-3 paragraphs with a description/measurements of outcome and predictor(s) and criteria for supporting or rejecting hypothesis, as well as a plot visualizing main outcome of interest. (3pts)
 
-My research question is, how has the passage of time post-2008 affected the recent graduate unemployment rate with other group types? (changed over time)
-My hypothesis is that the unemployment rate for recent college graduates post-2008 is currently one of the highest among other groups studied. The variables are unemployment rate, recent college graduates, college graduates, young workers, all workers, and years. My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are unemployed. The explanatory variable is the rate type. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate post 2008 among the other groups studied. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate post 2008 among the other groups studied.
 
-Please note that the date is the control, and is estimated in seconds so the estimate is very small.
+My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are willing to and able to work but are currently without a paid job. The explanatory variable is the rate type. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate among the other groups studied, over the passage of time since 2008. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate among the other groups studied over the passage of time since 2008.
 
-Predicting value of the rate w/ the type of rate
+
+
 
 The data file is "College-labor-data.xlsx", and contains the following variables:
 
 | Name           | Description                                                              |
 |:---------------|:-------------------------------------------------------------------------|
-| Date  | The date, measured in months, ranging from 1990-01-01 to 2025-12-01.     | 
+| Date  | The date, measured in months, ranging from 1990-01-01 to 2025-12-01. This is modified to only include 2008-01-01 to 2025-12-01 in this project.    | 
 | Unemployment rate | Percentage of people in data that are willing and able to work but are currently without a paid job.  |
 | Young workers | Those aged 22 to 27 without a bachelor's degree. |
 | All workers  | Workers aged 16 to 65.          |
@@ -32,6 +36,7 @@ The data file is "College-labor-data.xlsx", and contains the following variables
 | Recent college graduates | Those aged 22 to 27 with a bachelor's degree or higher. |
 
 * All figures exclude those currently enrolled in school.
+
 
 ```{r}
 getwd()
@@ -48,23 +53,34 @@ college_labor |>
   knitr::kable()
 ```
 ```{r}
-college_labor_longer <- college_labor |>
+college_labor <- college_labor |>
   pivot_longer(
     cols = c(`Recent graduates`, `Young workers`, `All workers`, `College graduates`),
     names_to = "group",
     values_to = "unemployment_rate"
   )
 ```
+```{r}
+library(dplyr)
+
+college_labor <- college_labor %>%
+  filter(Date >= as.Date("2008-01-01"))
+knitr::kable(college_labor)
+
+```
+
+
+
 
 Let's visualize the unemployment data among the group types using a histogram for the unemployment rate.
 
 ```{r}
-ggplot(college_labor_longer, aes(x = unemployment_rate)) +
+ggplot(college_labor,
+       aes(x = unemployment_rate)) +
   geom_histogram() +
   facet_wrap(~ group)
-
 ```
-From this histogram, it can be observed that an unemployment rate below five percent is generally a very common rate for recent graduates, college graduates and all workers. However, an unemployment rate above five percent is a more common rate for young workers.
+From this histogram, it can be observed the unemployment rate throughout passage of time post-2008 was generally lower for recent graduates, with the tallest bar being below the five percent unemployment rate, but the second and third highest bars being around the six and nine percent unemployment rate. The lowest unemployment rate throughout the passage of time post-2008 of these groups was college graduates, having the tallest bars below the five percent unemployment rate, and young workers having the highest unemployment rate throughout this time. The tallest ball for young workers was around seven or eight percent, and had more spread to values above a fifteen percent unemployment rate.
 
 
 
@@ -72,13 +88,21 @@ From this histogram, it can be observed that an unemployment rate below five per
 
 graph w/relationship 
 boxplot to show the difference between the rate types (control for time)
-
+```{r}
+ggplot(college_labor,
+       aes(x = group, y = unemployment_rate)) +
+  geom_boxplot() +
+  labs( x = "Work Group Types",
+        y = "Unemployment Rate",
+        title = "Unemployment rates across different worker groups, 2008-2025")
+```
+ 
 
 
 From both of these data visualizations, we can say the current unemployment rate among recent college graduates is higher than that of current workers in the U.S., post 2008. To compare the unemployment rates across the row, the next graph will combine recent grads, college grads, all workers and young workers onto one (polished) graph.
 
 ```{r}
-college_labor_longer |>
+college_labor |>
   ggplot(mapping = aes(x = `Date`, y = unemployment_rate, color = group)) +
   geom_line() +
   labs( x = "Date", 
@@ -87,13 +111,14 @@ college_labor_longer |>
         color = "Groups")
 ```
 
-From these graphs and data visualizations, it could be concluded that the unemployment rate is related to the job availability for recent college graduates based on its rate. For example, a high unemployment rate among recent graduates likely correlates with a lower job availability for recent graduates in the labor market. A low unemployment rate among recent graduates could correlate with a higher job availability for them in the labor market. It seems that this graph would answer my research question but disprove my hypothesis. Post-2008, recent college graduates do not have the highest unemployment rate, rather it's young workers that do, but recent college graduates follow closely behind.
-
- 
 ```{r}
-collegelabor.reg <- lm(`unemployment_rate` ~ `Date` + group, data = college_labor_longer) |>
+collegelabor.reg <- lm(`unemployment_rate` ~ `Date` + group, data = college_labor) |>
  summary()
 collegelabor.reg
 ```
+From these graphs and data visualizations, it could be concluded that the unemployment rate is related to the job availability for recent college graduates based on its rate. For example, a high unemployment rate among recent graduates likely correlates with a lower job availability for recent graduates in the labor market. A low unemployment rate among recent graduates could correlate with a higher job availability for them in the labor market. It seems that this graph would answer my research question but disprove my hypothesis. Post-2008, recent college graduates do not have the highest unemployment rate, rather it's young workers that do, but recent college graduates follow closely behind.
+
+ 
+
  
  
