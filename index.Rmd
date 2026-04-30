@@ -35,42 +35,34 @@ The data file is "College-labor-data.xlsx", and contains the following variables
 Note: All figures exclude those currently enrolled in school.
 
 
-```{r, include = FALSE}
-getwd()
-list.files()
-```
+
 
 ```{r, include = FALSE}
+# Load packages
 library(tidyverse)
 library(readxl)
 ```
 ```{r, include = FALSE}
+# Load data sheet
 college_labor <- read_excel("data/College-labor-data.xlsx", sheet = "unemployed", skip = 9)
 
 ```
 ```{r, include = FALSE}
+# Filter data to only include 2008-2025
 college_labor <- college_labor |>
   pivot_longer(
     cols = c(`Recent graduates`, `Young workers`, `All workers`, `College graduates`),
     names_to = "group",
     values_to = "unemployment_rate"
-  )
-```
-```{r, include = FALSE}
-library(dplyr)
-
-college_labor <- college_labor %>%
+  ) |>
   filter(Date >= as.Date("2007-12-01"))
-
-```
-```{r, include= FALSE}
-knitr::kable(college_labor)
 ```
 
 
 Let's visualize the unemployment data among all the group types using a histogram for the unemployment rate.
 
 ```{r}
+# Load data into a histogram
 ggplot(college_labor,
        aes(x = unemployment_rate)) +
   geom_histogram(bins = 30) +
@@ -86,6 +78,7 @@ ggplot(college_labor,
 Now, let's plot the unemployment rates on a boxplot and compare unemployment rates across the different worker groups:
 
 ```{r}
+# Load data into a boxplot
 ggplot(college_labor,
        aes(x = group, y = unemployment_rate)) +
   geom_boxplot() +
@@ -97,6 +90,7 @@ ggplot(college_labor,
 For aesthetics, let's also plot this on a line graph:
 
 ```{r}
+# Load data into a line graph
 college_labor |>
   ggplot(mapping = aes(x = `Date`, y = unemployment_rate, color = group)) +
   geom_line(linewidth = 0.8) +
@@ -109,14 +103,17 @@ college_labor |>
 
 Now let's calculate the regression:
 ```{r, include=FALSE}
+# Load "modelsummary" package
 library(modelsummary)
 ```
 ```{r, include=FALSE}
+# Create regression using data
 collegelabor.reg <- lm(unemployment_rate ~ Date + group, data = college_labor)
 ```
 
 
 ```{r}
+# Clean up regression table and make it more readable
 modelsummary(collegelabor.reg,
              coef_map = c(
                "(Intercept)" = "Baseline (All workers)",

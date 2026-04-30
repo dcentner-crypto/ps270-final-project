@@ -1593,33 +1593,36 @@ In a “Current Population Survey” from the U.S. Census Bureau and U.S. Bureau
 <p>Let’s visualize the unemployment data among all the group types using a histogram for the unemployment rate.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>,</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Load data into a histogram</span></span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>,</span>
 <span>       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>unemployment_rate</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span>,</span>
 <span>        y <span class='op'>=</span> <span class='st'>"Count"</span>,</span>
 <span>          title <span class='op'>=</span> <span class='st'>"Unemployment Rate Among All Group Types (2008-2025)"</span> <span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" alt="" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" alt="" width="624" /></p>
 </div>
 <p>From this histogram, it can be observed the unemployment rate from all group types throughout passage of time post-2008 to December of 2025 most commonly fell below five percent. This means that, from 2008 to 2025, the most common unemployment rate among all group types in the survey was approximately three or four percent.</p>
 <h2 id="results">Results</h2>
 <p>Now, let’s plot the unemployment rates on a boxplot and compare unemployment rates across the different worker groups:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>,</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Load data into a boxplot</span></span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>college_labor</span>,</span>
 <span>       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>group</span>, y <span class='op'>=</span> <span class='va'>unemployment_rate</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='st'>"Work Group Types"</span>,</span>
 <span>        y <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span>,</span>
 <span>        title <span class='op'>=</span> <span class='st'>"Unemployment rates across different worker groups, 2008-2025"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-8-1.png" alt="" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="624" /></p>
 </div>
 <p>For aesthetics, let’s also plot this on a line graph:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>college_labor</span> <span class='op'>|&gt;</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Load data into a line graph</span></span>
+<span><span class='va'>college_labor</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Date`</span>, y <span class='op'>=</span> <span class='va'>unemployment_rate</span>, color <span class='op'>=</span> <span class='va'>group</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span>linewidth <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_date.html'>scale_x_date</a></span><span class='op'>(</span>date_breaks <span class='op'>=</span> <span class='st'>"2 years"</span>, date_labels <span class='op'>=</span> <span class='st'>"%Y"</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -1628,12 +1631,13 @@ In a “Current Population Survey” from the U.S. Census Bureau and U.S. Bureau
 <span>        title <span class='op'>=</span> <span class='st'>"Unemployment Rate Among Group Types"</span>,</span>
 <span>        color <span class='op'>=</span> <span class='st'>"Groups"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-9-1.png" alt="" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" alt="" width="624" /></p>
 </div>
 <p>Now let’s calculate the regression:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://modelsummary.com/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>collegelabor.reg</span>,</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Clean up regression table and make it more readable</span></span>
+<span><span class='fu'><a href='https://modelsummary.com/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>collegelabor.reg</span>,</span>
 <span>             coef_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
 <span>               <span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Baseline (All workers)"</span>,</span>
 <span>               <span class='st'>"Date"</span> <span class='op'>=</span> <span class='st'>"Time Trend"</span>,</span>
