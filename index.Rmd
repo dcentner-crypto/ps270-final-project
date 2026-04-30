@@ -1,7 +1,7 @@
 ---
-title: "Unemployment rate among recent college grads and other group types, 2008-2025"
+title: "'Worst job market in five years': A Study on Unemployment for Recent College Graduates"
 author: "Dominic Centner"
-description: "Comparing unemployment rates among recent college grads to other labor market group types over the passage of time from 2008 to 2025."
+description: "Comparing unemployment rates among recent college graduates to other labor market group types over the passage of time from 2008 to 2025."
 output:
   distill::distill_article:
     self_contained: false
@@ -9,18 +9,15 @@ output:
 
 ## Introduction
 
-Today, anxiety and uncertainty follows recent college graduates as they navigate the college labor market. In a "Current Population Survey" from the U.S. Census Bureau and U.S. Bureau of Labor Statistics, it was interpreted by the Federal Reserve Bank of New York that unemployment rates for recent college graduates climbed to 5 percent in July 2025, and have stayed above it since then. At the end of 2025, the unemployment rate for recent college graduates was 5.6 percent.
+  Today, anxiety and uncertainty follows recent college graduates as they navigate the college labor market. Recent graduates from the class of 2026 are expected to face one of the toughest job markets since the COVID-19 pandemic, with AI displacing entry-level jobs, slower job creation, and economic uncertainty all in the air. 
+  In a "Current Population Survey" from the U.S. Census Bureau and U.S. Bureau of Labor Statistics, it was interpreted by the Federal Reserve Bank of New York that unemployment rates for recent college graduates climbed to 5 percent, above the baseline for all workers in the U.S in July 2025, and have stayed above it since then. At the end of 2025, the unemployment rate for recent college graduates was 5.6 percent. (Source: https://www.newyorkfed.org/research/college-labor-market#--:explore:unemployment)
 
-(Source here: https://www.newyorkfed.org/research/college-labor-market#--:explore:unemployment)
-
-This raises a point of interest that I am exploring in my project. With this anxiety surrounding recent college graduates and their increasing risk of unemployment, I am interested in exploring data related to recent college graduates and other group types with the type of unemployment rate they have. My research question is, how has the passage of time post-2008 changed the recent graduate unemployment rate with other group types over time? My hypothesis is that the passage of time post-2008 will show a pattern that the recent graduate unemployment rate increased more than other groups over time.
+  This raises a point of interest that I am exploring in my project. With this anxiety surrounding recent college graduates and their increasing risk of unemployment, I am interested in exploring data related to recent college graduates and other group types with the type of unemployment rate they have. My research question is, how has the passage of time since 2008 changed the recent graduate unemployment rate with other group types over time? My hypothesis is that the passage of time post-2008 will show a pattern that the recent graduate unemployment rate increased more than other groups over time.
 
 
 ## Data 
 
-For the data section, you should note if your research design is cross-sectional (most projects will be of this type) or one of the other designs we discussed (randomized experiment, before-and-after, differences-in-differences). 
-
-My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are willing to and able to work but are currently without a paid job. The explanatory variable is the rate type. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate among the other groups studied, over the passage of time since 2008. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate among the other groups studied over the passage of time since 2008.
+  My outcome variable of interest is the unemployment rate percent. This is measured by measuring what specific group (in this case recent college grads) and the percentage of them that are willing to and able to work but are currently without a paid job. The explanatory variable is the rate type. An observed pattern in the data that would prove my hypothesis would be recent college graduates having a higher unemployment rate among the other groups studied, over the passage of time since 2008. A pattern that would disprove my hypothesis would be recent college graduates having a lower unemployment rate among the other groups studied over the passage of time since 2008. My research design is not cross-sectional, as it includes observations over multiple time periods from 2008 to 2025. Before-and-after would best describe my research design, as my research is showing how unemployment rates change over time across multiple worker group types. My analysis tracks the unemployment rate throughout 2008-2025 while comparing the rate differences between groups.
 
 
 
@@ -28,7 +25,7 @@ The data file is "College-labor-data.xlsx", and contains the following variables
 
 | Name           | Description                                                              |
 |:---------------|:-------------------------------------------------------------------------|
-| Date  | The date, measured in months, ranging from 1990-01-01 to 2025-12-01. This is modified to only include 2008-01-01 to 2025-12-01 in this project.    | 
+| Date  | The date, measured in months, ranging from 1990-01-01 to 2025-12-01. This is modified to only include 2007-12-01 to 2025-12-01 in this project.    | 
 | Unemployment rate | Percentage of people in data that are willing and able to work but are currently without a paid job.  |
 | Young workers | Those aged 22 to 27 without a bachelor's degree. |
 | All workers  | Workers aged 16 to 65.          |
@@ -66,7 +63,7 @@ college_labor <- college_labor %>%
   filter(Date >= as.Date("2007-12-01"))
 
 ```
-```{r}
+```{r, include= FALSE}
 knitr::kable(college_labor)
 ```
 
@@ -76,12 +73,12 @@ Let's visualize the unemployment data among all the group types using a histogra
 ```{r}
 ggplot(college_labor,
        aes(x = unemployment_rate)) +
-  geom_histogram() +
+  geom_histogram(bins = 40) +
   labs( x = "Unemployment Rate",
         y = "Count",
           title = "Unemployment Rate Among All Group Types (2008-2025)" )
 ```
-From this histogram, it can be observed the unemployment rate from all group types throughout passage of time post-2008 to December of 2025 most commonly fell below five percent. This means that, from 2008 to 2025, the most common unemployment rate among all group types in the survey was around three or four percent.
+  From this histogram, it can be observed the unemployment rate from all group types throughout passage of time post-2008 to December of 2025 most commonly fell below five percent. This means that, from 2008 to 2025, the most common unemployment rate among all group types in the survey was approximately three or four percent.
 
 
 ## Results
@@ -109,45 +106,42 @@ college_labor |>
         color = "Groups")
 ```
 
+Now let's calculate the regression:
+```{r, include=FALSE}
+library(modelsummary)
+```
+```{r, include=FALSE}
+collegelabor.reg <- lm(unemployment_rate ~ Date + group, data = college_labor)
+```
 
 
 ```{r}
-collegelabor.reg <- lm(unemployment_rate ~ Date + group, data = college_labor)
-summary(collegelabor.reg)
+modelsummary(collegelabor.reg,
+             coef_map = c(
+               "(Intercept)" = "Baseline (All workers)",
+               "Date" = "Time Trend",
+               "groupCollege graduates" = "College Graduates",
+               "groupRecent graduates" = "Recent graduates",
+               "groupYoung workers" = "Young workers"
+             ),
+             statistic = c("std.error", "p.value"),
+             fmt = 3,
+             title = "Regression Results of Unemployment Rates by Group")
+
 ```
-+ 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest, describing if it is statistically significant, and evaluating its substantive meaning and whether we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts):
 
+  From the results of the boxplot and line graph, it can be observed that young workers have the highest unemployment rate and greatest variablity. This indicates they have the most unstable and highest rates of unemployment out of all other group types observed throughout 2008 to 2025. College graduates have the lowest unemployment rate and lowest variablity, meaning they have the lowest and most stable unemployment rates out of all group types observed throughout 2008 to 2025. Specifically from the boxplot, it can be observed that Recent graduates fall in between, experiencing higher unemployment than College graduates but less than Young workers overtime. The All workers category falls in the middle and reflects the overall labor market throughout 2008 to 2025. The large amount of outliers in the Young workers and Recent graduates suggests periods of unusually high unemployment, reflecting economic crises like the Great Recession and COVID-19 pandemic. From the line graph it can be observed that after the COVID-19 pandemic, Young workers and Recent graduates became the two group types with the highest rate of unemployment, with Recent graduates surpassing the baseline unemployment rate for All workers.
 
+  The regression results show that unemployment rate varies across the group types and throughout the passage of time from 2008 to 2025. The main coefficient of interest is date, which captures the overall time trend in unemployment. The negative coefficient on the Date variable suggests that unemployment rates slightly decreased throughout the passage of time from 2008 to 2025, holding group types constant. Although the size of the coefficient is small due to the scale of the Date variable, it suggests a downward trend in unemployment over the time period. Using All workers as the reference category, the intercept represents the baseline unemployment rate for this group type. Compared to the baseline group, college graduates have significantly lower unemployment rates, around 2.5 percentage points less on average. In contrast, Young workers experience significantly higher unemployment rates, with rates over 4 percentage points higher than the baseline group.Recent graduates have slightly lower unemployment rates, around 0.55 percentage points less than the baseline group.
+  All group coefficients are statistically significant at p-values < 0.01, with recent college graduates having a p-value of 0.002, and the rest of the group types having a p-value of <0.001. This indicates strong evidence that the unemployment rates overtime from 2008 to 2025 differ across the different group types. The regression also has relatively small standard errors, which indicates that the estimated differences in unemployment have a low level of uncertainty. For example, the estimated difference in the unemployment rate for Young workers is 4.314, much larger than its standard error of 0.18. While the regression shows strong differences between these group types, these results should be interpreted as associations rather than causally, because factors such as work experience or job type might also influence employment. 
 
-
-
-
-From the results of the boxplot and line graph, it can be observed that young workers have the highest unemployment rate and greatest variablity. This indicates they have the most unstable and highest rates of unemployment out of all other group types observed throughout 2008 to 2025. College graduates have the lowest unemployment rate and lowest variablity, meaning they have the lowest and most stable unemployment rates out of all group types observed throughout 2008 to 2025. Specifically from the boxplot, it can be observed that Recent graduates fall in between, experiencing higher unemployment than College graduates but less than Young workers overtime. The All workers category falls in the middle and reflects the overall labor market throughout 2008 to 2025. The large amount of outliers in the Young workers and Recent graduates suggests periods of unusually high unemployment, reflecting economic crises like the Great Recession and COVID-19 pandemic. From the line graph it can be observed that after the COVID-19 pandemic, Young workers and Recent graduates became the two group types with the highest rate of unemployment, with Recent graduates surpassing the baseline unemployment rate for All workers.
-
-For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
-
-The regression results show that unemployment rate varies across the group types and throughout the passage of time from 2008 to 2025, specifically that Young workers had the highest unemployment rate and College graduates had the lowest unemployment rate throughout this time frame. Using All workers as the reference category, the intercept represents the baseline unemployment rate for this group type. The main coefficient of interest is date. The negative coefficient on the Date variable suggests that unemployment rates slightly decreased throughout the passage of time from 2008 to 2025, holding group types constant. Compared to the baseline group, college graduates have significantly lower unemployment rates, around 2.5 percentage points less on average. Recent graduates also have lower unemployment rates, but only slightly, around 0.554 percentage points less than the baseline group. In contrast, Young workers experience significantly higher unemployment rates, with rates over 4 percentage points higher than the baseline group. All group coefficients are statistically significant at a p-value of 0.00224, which indicates strong evidence that the unemployment rates overtime from 2008 to 2025 differ across the different group types. The regression also has relatively small standard errors. The small standard errors indicate that the estimated differences in unemployment have a low level of uncertainty. For example, the estimate difference in the unemployment rate for Young workers is 4.314, much larger than its standard error of 0.18. While the regression shows strong differences between these group types, these results should be interpreted as associations rather than causally, because factors such as work experience or job type might also influence employment. Because this dataset is seperated by only age and education level, we cannot 
-
-
-
- 
  
 ## Conclusion 
 
-1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis;
+From the results of this research project, it can be concluded that the unemployment rate for recent college graduates compared to other group types was lower than that of younger workers but higher than college graduates. Both the graph and regression results show that younger workers experience the highest and most volatile unemployment rates, while college graduates experience the lowest and most stable rates. Recent graduates fall between these groups. These findings from my research project do not support my original hypothesis that recent graduates would experience the highest increase in unemployment rates from 2008 to 2025. These findings point to major inequalities in the job market, with younger workers and less-experienced (recent college graduates) workers consistently facing higher and more unstable unemployment rates than more experienced and educated workers, like college graduates.
 
-From the results of this research project, it can concluded that the unemployment rate for recent college graduates compared to other group types was lower than . It seems that this graph would answer my research question but disprove my hypothesis that the passage of time post-2008 will show a pattern that the recent graduate unemployment rate increased more than other groups over time. From my research, I can now say that the unemployment rate for recent college graduates did not increase the most throughout the passage of time compared to all other group types.
-
-
-(ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc):
-
-However, there were some limitations and threats to inference to this analysis. 
-
-
-
-and stating how you could improve your analysis if you had more time/money:
-
-If I had more time and perhaps more money, I would want to research directly how the great recession and COVID-19 pandemic impacted the unemployment rates for younger workers.  Splitting this into more specific parts, like job type, to see what groups in younger workers were impacted and to what degree. I would also want to further research the unemployment rate for recent graduates overtaking the baseline unemployment rate for all workers around 
+When interpreting the results of this research project, several limitations should be considered. The dataset clearly defines the worker group types by age and education level, but the analysis doesn't take into account other important factors like the industry where the workers are employed in. This factor may influence unemployment and differ drastically across these groups. 
+For example, young workers and recent graduates may be more likely to work in the service industry, which is much more vulnerable to layoffs during economic crises and uncertainty (look at the COVID-19 pandemic impact on service workers), while college graduates are more likely to have a stable job or be centered in a more stable job industry. The data also assumes "Date" as a simple linear change, but this does not fully grasp economic fluctuations or crises, like recessions and market shocks. If I had more time and perhaps more money, I would want to research directly how the great recession and COVID-19 pandemic impacted the unemployment rates for younger workers. I would do this by splitting the group types into more specific parts, like job type, to see what groups in younger workers were more drastically impacted, and to what degree. I would also want to further research the unemployment rate for recent graduates overtaking the baseline unemployment rate for all workers right around the time of the COVID-19 pandemic. Did job experience have to do with this more than job industry? 
 
  
 
