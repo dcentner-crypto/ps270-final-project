@@ -73,7 +73,7 @@ Let's visualize the unemployment data among all the group types using a histogra
 ```{r}
 ggplot(college_labor,
        aes(x = unemployment_rate)) +
-  geom_histogram(bins = 40) +
+  geom_histogram(bins = 30) +
   labs( x = "Unemployment Rate",
         y = "Count",
           title = "Unemployment Rate Among All Group Types (2008-2025)" )
@@ -99,7 +99,8 @@ For aesthetics, let's also plot this on a line graph:
 ```{r}
 college_labor |>
   ggplot(mapping = aes(x = `Date`, y = unemployment_rate, color = group)) +
-  geom_line(linewidth = 1.0) +
+  geom_line(linewidth = 0.8) +
+    scale_x_date(date_breaks = "2 years", date_labels = "%Y") +
   labs( x = "Date", 
         y = "Unemployment Rate", 
         title = "Unemployment Rate Among Group Types",
